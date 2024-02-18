@@ -1,5 +1,11 @@
 # Spatial Ecology in R 👾
 
+## Student
+Tyler von der Heyden
+
+**Australian Italian**
+> International Masters Student
+
 ### Professor 👨‍🏫
 Duccio Rocchini
 
@@ -11,6 +17,3 @@ Duccio Rocchini
 
 Add an emoji by using the colon symbol
 🙃 😊 🤦
-
-> **To add a note put the text inside double asterix's on both sides like in this case**
-> : then the note can continue on the next line but without bold text by continuing the greater than symbol on the next line
