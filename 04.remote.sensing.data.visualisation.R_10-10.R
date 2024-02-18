@@ -1,53 +1,74 @@
-install.packages("spatstat")
-install.packages("terra")
+# RS data
 
-library(tidyverse)
-library(spatstat)
+library(devtools) # packages in R are also called libraries
+
+# install the imageRy package from GitHub
+install_github("ducciorocchini/imageRy")  # from devtools
+
+library(imageRy)
 library(terra)
+# in case you have not terra
+# install.packages("terra")
 
-bei
-view(bei)
+# list the data
+im.list()
 
-# plotting the data
-plot(bei)
+b2 <- im.import("sentinel.dolomites.b2.tif") 
 
-# changing dimension - cex
-plot(bei, cex=.2)
+cl <- colorRampPalette(c("black", "grey", "light grey")) (100)
+plot(b2, col=cl)
 
-# changing the symbol - pch
-plot(bei, cex=.2, pch=19)
+# import the green band from Sentinel-2 (band 3)
+b3 <- im.import("sentinel.dolomites.b3.tif") 
+plot(b3, col=cl)
 
-# additional datasets
-bei.extra
-plot(bei.extra)
+# import the red band from Sentinel-2 (band 4)
+b4 <- im.import("sentinel.dolomites.b4.tif") 
+plot(b4, col=cl)
 
-# let's use only part of the dataset: elev
-plot(bei.extra$elev)
-elevation <- bei.extra$elev
-plot(elevation)
+# import the NIR band from Sentinel-2 (band 8)
+b8 <- im.import("sentinel.dolomites.b8.tif") 
+plot(b8, col=cl)
 
-# second method to select elements
-elevation2 <- bei.extra[[1]]
-plot(elevation2)
+# multiframe
+par(mfrow=c(2,2))
+plot(b2, col=cl)
+plot(b3, col=cl)
+plot(b4, col=cl)
+plot(b8, col=cl)
 
-# passing from points to a continuous/creating a density map
-densitymap <- density(bei)
-densitymap
-plot(densitymap) # density of the trees in the area
-points(bei, cex = 0.2)
+# stack images
+stacksent <- c(b2, b3, b4, b8)
+dev.off() # it closes devices
+plot(stacksent, col=cl)
 
-#changing the colour scheme
-colorRampPalette(c("black", "red", "orange", "yellow"))
-cl <- colorRampPalette(c("black", "red", "orange", "yellow"))(100)   # Yellow is the most impactful colour, your eyes are drawn to it first, therefore use it appropriately with the part of the plot that youare aiming to draw attention to
-plot(densitymap, col = cl)
+plot(stacksent[[4]], col=cl)
 
-# redoing with only a couple colours
-colorRampPalette(c("black", "red", "orange", "yellow"))
-cl <- colorRampPalette(c("black", "red", "orange", "yellow"))(4)   # Yellow is the most impactful colour, your eyes are drawn to it first, therefore use it appropriately with the part of the plot that youare aiming to draw attention to
-plot(densitymap, col = cl)
+# Exercise: plot in a multiframe the bands with different color ramps
+par(mfrow=c(2,2))
 
-# multiframe [NOT FINISHED PROPERLY]
-par(mfrow = c(3,1))
-plot(densitymap)
-plot(elev, grad, bei)
+clb <- colorRampPalette(c("dark blue", "blue", "light blue")) (100)
+plot(b2, col=clb)
 
+clg <- colorRampPalette(c("dark green", "green", "light green")) (100)
+plot(b3, col=clg)
+
+clr <- colorRampPalette(c("dark red", "red", "pink")) (100)
+plot(b4, col=clr)
+
+cln <- colorRampPalette(c("brown", "orange", "yellow")) (100)
+plot(b8, col=cln)
+
+# RGB space
+# stacksent: 
+# band2 blue element 1, stacksent[[1]] 
+# band3 green element 2, stacksent[[2]]
+# band4 red element 3, stacksent[[3]]
+# band8 nir element 4, stacksent[[4]]
+im.plotRGB(stacksent, r=3, g=2, b=1)
+im.plotRGB(stacksent, r=4, g=3, b=2)
+im.plotRGB(stacksent, r=3, g=4, b=2)
+im.plotRGB(stacksent, r=3, g=2, b=4)
+
+
+pairs(stacksent)
