@@ -113,17 +113,24 @@ dev.off() # use this function to close the multiframe
 dif_19to20 <- nov_stack[[4]]-jan_stack[[4]]
 plot(dif_19to20, col = cl_viridisc)
 
-# We can take this one step further and calculate the difference vegetation index (DVI) - distinguishes between soil and vegetation
+# We can take this one step further and calculate the normalised difference vegetation index (NDVI) - distinguishes between soil and vegetation
 # To do this we compare the values of NearInfraRed and Red light reflection and plot them to estimate the vegetation coverage
-dvi_jan <- jan_stack[[4]] - jan_stack[[3]]
+
 dvi_nov <- nov_stack[[4]] - nov_stack[[3]]
-plot(dvi_jan)
+ndvi_nov <- nov_stack[[4]] - nov_stack[[3]]/nov_stack[[4]] + nov_stack[[3]]
+
+dvi_jan <- jan_stack[[4]] - jan_stack[[3]]
+ndvi_jan <- jan_stack[[4]] - jan_stack[[3]]/jan_stack[[4]] + jan_stack[[3]]
+
 plot(dvi_nov)
+plot(dvi_jan)
+plot(ndvi_nov)
+plot(ndvi_jan)
 dev.off()
 
 # then we look at the difference between the two times
-difdvi_19to20 <- dvi_nov - dvi_jan
-plot(difdvi_19to20, col = inferno(256))
+difndvi_19to20 <- ndvi_nov - ndvi_jan
+plot(difndvi_19to20, col = inferno(256))
 # We then plot this to get a map with vegetation loss yellow, vegetation gain (purple), relatively unchanged areas (red)
 # this colour palette is used for its suitability to colour blindness
 
