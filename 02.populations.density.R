@@ -37,6 +37,7 @@ densitymap <- density(bei)
 plot(densitymap)
 points(bei, cex=.2)
 
+# here we are starting to test out different colour palettes that can be used
 cl <- colorRampPalette(c("black", "red", "orange", "yellow"))(100)
 plot(densitymap, col=cl)
 
@@ -48,6 +49,7 @@ plot(densitymap, col=clnew)
 
 plot(bei.extra)
 
+# Subsetting for the first element
 elev <- bei.extra[[1]] # bei.extra$elev
 plot(elev)
 
@@ -56,6 +58,7 @@ par(mfrow=c(1,2))
 plot(densitymap)
 plot(elev)
 
+# changing the layout of the generate dplot by reusing the ~par() function
 par(mfrow=c(2,1))
 plot(densitymap)
 plot(elev)
